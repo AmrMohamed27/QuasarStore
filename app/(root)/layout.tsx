@@ -1,5 +1,8 @@
 import { getCurrentUser } from "@/actions/user.actions";
 import { redirect } from "next/navigation";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { cookies } from "next/headers";
 
 export default async function DefaultLayout({
   children,
@@ -9,10 +12,16 @@ export default async function DefaultLayout({
   const currentUser = await getCurrentUser();
 
   if (!currentUser) return redirect("/signin");
+
+  const cookieStore = await cookies();
+  const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
   return (
-    <div className="flex lg:flex-row min-h-screen">
-      <div className="hidden lg:flex bg-brand-red-1 text-white min-h-screen py-8 px-4 flex-col gap-16 min-w-[40%]"></div>
-      {children}
-    </div>
+    <SidebarProvider defaultOpen={defaultOpen}>
+      <AppSidebar currentUser={currentUser} />
+      <div className="flex lg:flex-row min-h-screen">
+        <SidebarTrigger />
+        {children}
+      </div>
+    </SidebarProvider>
   );
 }
