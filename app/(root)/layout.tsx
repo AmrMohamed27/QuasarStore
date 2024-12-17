@@ -1,8 +1,9 @@
 import { getCurrentUser } from "@/actions/user.actions";
 import { redirect } from "next/navigation";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import { AppSidebar } from "@/components/common/AppSidebar";
 import { cookies } from "next/headers";
+import Navbar from "@/components/common/Navbar";
 
 export default async function DefaultLayout({
   children,
@@ -18,9 +19,12 @@ export default async function DefaultLayout({
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar currentUser={currentUser} />
-      <div className="flex lg:flex-row min-h-screen">
+      <div className="flex lg:flex-row min-h-screen w-full">
         <SidebarTrigger />
-        {children}
+        <div className="flex flex-col w-full">
+          <Navbar currentUser={currentUser} />
+          {children}
+        </div>
       </div>
     </SidebarProvider>
   );

@@ -22,7 +22,7 @@ export function AppSidebar(currentUser: any) {
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex flex-row gap-4 items-center justify-center py-8">
+        <div className="flex flex-row gap-4 items-center justify-center py-4">
           <Image
             src="/assets/images/logo-red.png"
             alt="QuasarStore Logo"
@@ -82,7 +82,7 @@ export function AppSidebar(currentUser: any) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild size={"lg"}>
-              <div>
+              <Link href="/profile">
                 <Image
                   src={avatar}
                   alt="Avatar"
@@ -90,8 +90,11 @@ export function AppSidebar(currentUser: any) {
                   height={40}
                   className="rounded-full"
                 />
-                <span className="font-semibold text-lg">{fullName}</span>
-              </div>
+                <div className="flex flex-col gap-1 items-start justify-center">
+                  <span className="font-semibold text-lg">{fullName}</span>
+                  <span className="text-sm text-brand-gray">{email}</span>
+                </div>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

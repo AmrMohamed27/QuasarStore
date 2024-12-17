@@ -1,6 +1,8 @@
 import { SidebarItem } from "@/types";
 import { LayoutDashboard, FileText, Image, Video, Folder } from "lucide-react";
 
+export const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
+
 export const sidebarItems: SidebarItem[] = [
   {
     id: "1",

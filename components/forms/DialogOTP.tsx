@@ -64,6 +64,21 @@ const DialogOTP = ({
         description: "Please try again with a different OTP",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // handle submit otp
+  const handleSubmit = async () => {
+    if (accountId) {
+      await handleVerifyOTP(accountId, otpValue);
+    } else {
+      toast({
+        title: "accountId not found",
+        description: "Please try again",
+        variant: "destructive",
+      });
     }
   };
   return (
@@ -98,17 +113,9 @@ const DialogOTP = ({
           </InputOTPGroup>
         </InputOTP>
         <Button
-          className="w-full bg-brand-red-1 rounded-full py-6"
+          className="w-full bg-brand-red-1 rounded-full py-6 text-foreground"
           onClick={async () => {
-            if (accountId) {
-              await handleVerifyOTP(accountId, otpValue);
-            } else {
-              toast({
-                title: "accountId not found",
-                description: "Please try again",
-                variant: "destructive",
-              });
-            }
+            await handleSubmit();
           }}
         >
           {isLoading ? <Loader className="animate-spin" /> : "Submit"}

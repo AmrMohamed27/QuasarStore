@@ -22,3 +22,15 @@ export type AppSidebarProps = {
   avatar: string;
   email: string;
 };
+
+export type MobileMenuProps = {
+  handleUploadClick: () => void;
+  handleSignOut: () => Promise<void>;
+};
+
+export type UploadFileProps = {
+  file: File;
+  ownerId: string;
+  accountId: string;
+  path: string;
+};
