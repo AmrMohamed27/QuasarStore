@@ -16,7 +16,7 @@ const MobileMenu = ({ handleSignOut, handleUploadClick }: MobileMenuProps) => {
   return (
     <div className="flex lg:hidden flex-row gap-2 sm:gap-4 items-center">
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button variant={"outline"} size={"icon"} className="rounded-full">
             <Menu />
           </Button>

@@ -16,11 +16,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function AppSidebar(currentUser: any) {
-  const { fullName, avatar, email } = currentUser.currentUser;
+export function AppSidebar({ currentUser }: { currentUser: any }) {
+  const { fullName, avatar, email } = currentUser;
   const pathname = usePathname();
   return (
-    <Sidebar>
+    <Sidebar variant="sidebar">
       <SidebarHeader>
         <div className="flex flex-row gap-4 items-center justify-center py-4">
           <Image
@@ -29,7 +29,7 @@ export function AppSidebar(currentUser: any) {
             width={80}
             height={80}
           />
-          <span className="font-medium text-2xl select-none text-brand-red-1">
+          <span className="font-medium text-3xl select-none text-brand-red-1">
             QuasarStore
           </span>
         </div>
@@ -42,7 +42,7 @@ export function AppSidebar(currentUser: any) {
                 <SidebarMenuButton
                   asChild
                   isActive={pathname.includes(item.url)}
-                  className={`rounded-full p-8 flex flex-row gap-8 data-[active=true]:bg-brand-red-1 data-[active=true]:text-white group`}
+                  className={`rounded-full p-8 mb-2 flex flex-row gap-8 data-[active=true]:bg-brand-red-1 data-[active=true]:text-white group`}
                 >
                   <div>
                     <item.icon

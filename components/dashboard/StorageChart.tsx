@@ -19,18 +19,24 @@ export function StorageChart({
 }) {
   let percentage = Number(((usage / total) * 100).toFixed(2));
   if (percentage < 1) percentage = 1;
-  const chartData = [{ usedSpace: `${percentage}%`, fill: "#FFFFFF" }];
-  console.log("usage: ", usage);
-  console.log("total: ", total);
+
+  const chartData = [
+    {
+      usedSpace: percentage,
+      fill: "#FFFFFF", // Ensure the bar is white
+    },
+  ];
+
   const chartConfig = {
     usedSpace: {
       label: "usedSpace",
     },
   } satisfies ChartConfig;
+
   return (
     <ChartContainer
       config={chartConfig}
-      className="min-h-[200px] bg-transparent aspect-[4/3]"
+      className="min-h-[180px] max-w-[250px] bg-transparent aspect-[4/3]"
     >
       <RadialBarChart
         data={chartData}
@@ -38,14 +44,15 @@ export function StorageChart({
         endAngle={(percentage / 100) * 360}
         innerRadius={80}
         outerRadius={120}
+        barSize={10}
       >
         <PolarGrid
           gridType="circle"
           radialLines={false}
-          stroke="none"
+          stroke={"none"}
           polarRadius={[86, 74]}
         />
-        <RadialBar dataKey="usedSpace" background cornerRadius={10} />
+        <RadialBar dataKey="usedSpace" cornerRadius={10} />
         <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
           <Label
             content={({ viewBox }) => {
@@ -60,9 +67,9 @@ export function StorageChart({
                     <tspan
                       x={viewBox.cx}
                       y={viewBox.cy}
-                      className=" text-xl text-white font-bold fill-white"
+                      className="text-xl text-white font-bold fill-white"
                     >
-                      {chartData[0].usedSpace.toLocaleString()}
+                      {chartData[0].usedSpace.toFixed(0)}%
                     </tspan>
                     <tspan
                       x={viewBox.cx}

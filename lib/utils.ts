@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { appwriteConfig } from "./appwrite/config";
+import { Models } from "node-appwrite";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -211,4 +212,74 @@ export const constructDownloadUrl = (bucketFileId: string) => {
   return `${appwriteConfig.endpointUrl}/storage/buckets/${appwriteConfig.bucketId}/files/${bucketFileId}/download?project=${appwriteConfig.projectId}`;
 };
 
+export const getFileTypeSizes = (files?: Models.Document[]) => {
+  const FileTypeSizes = { document: 0, image: 0, "video, audio": 0, others: 0 };
+  files?.forEach((file) => {
+    const type = file.type as string;
+    switch (type) {
+      case "document":
+        FileTypeSizes.document += file.size;
+        break;
+      case "image":
+        FileTypeSizes.image += file.size;
+        break;
+      case "video":
+      case "audio":
+        FileTypeSizes["video, audio"] += file.size;
+        break;
+      default:
+        FileTypeSizes.others += file.size;
+        break;
+    }
+  });
+  return FileTypeSizes;
+};
 
+export const getFileTypeLastUpdates = (files?: Models.Document[]) => {
+  const FileTypeLastUpdates: { [key: string]: string } = {
+    document: "",
+    image: "",
+    "video, audio": "",
+    others: "",
+  };
+  files?.forEach((file) => {
+    const type = file.type as string;
+    switch (type) {
+      case "document":
+        if (
+          new Date(file.$updatedAt) > new Date(FileTypeLastUpdates.document) ||
+          FileTypeLastUpdates.document === ""
+        ) {
+          FileTypeLastUpdates.document = file.$updatedAt;
+        }
+        break;
+      case "image":
+        if (
+          new Date(file.$updatedAt) > new Date(FileTypeLastUpdates.image) ||
+          FileTypeLastUpdates.image === ""
+        ) {
+          FileTypeLastUpdates.image = file.$updatedAt;
+        }
+        break;
+      case "video":
+      case "audio":
+        if (
+          new Date(file.$updatedAt) >
+            new Date(FileTypeLastUpdates["video, audio"]) ||
+          FileTypeLastUpdates["video, audio"] === ""
+        ) {
+          FileTypeLastUpdates["video, audio"] = file.$updatedAt;
+        }
+        break;
+      default:
+        if (
+          new Date(file.$updatedAt) > new Date(FileTypeLastUpdates.others) ||
+          FileTypeLastUpdates.others === ""
+        ) {
+          FileTypeLastUpdates.others = file.$updatedAt;
+        }
+        break;
+    }
+  });
+  return FileTypeLastUpdates;
+};
