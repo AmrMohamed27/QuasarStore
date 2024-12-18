@@ -12,7 +12,6 @@ import { uploadFile } from "@/actions/file.actions";
 import { MAX_FILE_SIZE } from "@/constants";
 import { usePathname } from "next/navigation";
 import { convertFileToUrl, getFileType } from "@/lib/utils";
-import Thumbnail from "./Thumbnail";
 import Image from "next/image";
 import {
   Tooltip,
@@ -20,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import ThumbnailCircle from "./ThumbnailCircle";
 
 const Navbar = (currentUser: any) => {
   // User data
@@ -138,7 +138,7 @@ const Navbar = (currentUser: any) => {
         handleSignOut={handleSignOut}
       />
       {files.length > 0 && (
-        <ul className="absolute bottom-16 right-4 z-10">
+        <ul className="absolute bottom-16 right-4 z-10 bg-background border-2 border-brand-kohly/20 p-4 rounded-xl">
           <h4 className="text-lg font-semibold">In Progress</h4>
 
           {files.map((file, index) => {
@@ -147,10 +147,10 @@ const Navbar = (currentUser: any) => {
             return (
               <li
                 key={`${file.name}-${index}`}
-                className="flex items-center gap-4 px-4 py-2 transition-colors duration-200 ease-in-out shadow-sm"
+                className="flex items-center  gap-4 px-4 py-2 transition-colors duration-200 ease-in-out shadow-sm"
               >
                 <div className="flex items-center gap-3">
-                  <Thumbnail
+                  <ThumbnailCircle
                     type={type}
                     extension={extension}
                     url={convertFileToUrl(file)}

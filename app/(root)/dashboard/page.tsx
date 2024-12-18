@@ -8,7 +8,6 @@ import {
   getFileTypeLastUpdates,
   getFileTypeSizes,
 } from "@/lib/utils";
-import { Separator } from "@radix-ui/react-separator";
 import Image from "next/image";
 import React from "react";
 

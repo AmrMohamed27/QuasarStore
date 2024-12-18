@@ -3,12 +3,16 @@ import Thumbnail from "./Thumbnail";
 
 const ThumbnailCircle = ({
   type,
+  extension,
+  url,
   className,
   imageClassName,
 }: {
   type: string;
   className?: string;
   imageClassName?: string;
+  extension?: string;
+  url?: string;
 }) => {
   return (
     <div
@@ -25,7 +29,13 @@ const ThumbnailCircle = ({
         className
       )}
     >
-      <Thumbnail type={type} className="z-10" imageClassName={imageClassName} />
+      <Thumbnail
+        type={type}
+        extension={extension}
+        url={url}
+        className="z-10"
+        imageClassName={imageClassName}
+      />
     </div>
   );
 };

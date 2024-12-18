@@ -20,7 +20,7 @@ export const Thumbnail = ({
   const isImage = type === "image" && extension !== "svg";
 
   return (
-    <figure className={cn("thumbnail", className)}>
+    <figure className={cn("rounded-full", className)}>
       <Image
         src={isImage && url ? url : getFileIcon(extension, type)}
         alt="thumbnail"
