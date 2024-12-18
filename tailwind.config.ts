@@ -24,7 +24,7 @@ const config: Config = {
         "brand-white-2": "#F2F4F8",
         "accent-red": "#FF7474",
         "accent-green": "#3DD9B3",
-        "accent-blue": "#F9AB72",
+        "accent-orange": "#F9AB72",
         "accent-pink": "#EEA8FD",
         "accent-light-blue": "#56B8FF",
         "error-red": "#B80000",

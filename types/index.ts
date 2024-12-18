@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { LucideIcon } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
+
+export type FileType = "document" | "image" | "video" | "audio" | "other";
 
 export type DialogProps = {
   isDialogOpen: boolean;
@@ -33,4 +36,29 @@ export type UploadFileProps = {
   ownerId: string;
   accountId: string;
   path: string;
+};
+
+export type GetFilesProps = {
+  types: FileType[];
+  searchTerm?: string;
+  sort?: string;
+  limit?: number;
+};
+
+export type GetUsedSpaceReturn = {
+  image: { size: number; latestDate: string };
+  document: { size: number; latestDate: string };
+  video: { size: number; latestDate: string };
+  audio: { size: number; latestDate: string };
+  other: { size: number; latestDate: string };
+  used: number;
+  all: number;
+};
+
+export type optionsMenuType = {
+  id: number;
+  title: string;
+  url: string;
+  icon: LucideIcon;
+  backgroundColor: string;
 };

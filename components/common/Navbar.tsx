@@ -14,6 +14,12 @@ import { usePathname } from "next/navigation";
 import { convertFileToUrl, getFileType } from "@/lib/utils";
 import Thumbnail from "./Thumbnail";
 import Image from "next/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Navbar = (currentUser: any) => {
   // User data
@@ -102,11 +108,20 @@ const Navbar = (currentUser: any) => {
         {/* Dark Mode Toggle */}
         <DarkModeToggle />
         {/* Sign Out Button */}
-        <LogOut
-          onClick={async () => await handleSignOut()}
-          color={"#fa7275"}
-          className="cursor-pointer"
-        />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <LogOut
+                onClick={async () => await handleSignOut()}
+                color={"#fa7275"}
+                className="cursor-pointer"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Log out</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       {/* Hidden Upload Input */}
       <Input

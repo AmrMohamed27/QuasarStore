@@ -23,7 +23,9 @@ export default async function DefaultLayout({
         <SidebarTrigger />
         <div className="flex flex-col w-full">
           <Navbar currentUser={currentUser} />
-          {children}
+          <div className="bg-brand-white-2 dark:bg-black/30 rounded-3xl min-h-screen mx-8 py-8 px-10">
+            {children}
+          </div>
         </div>
       </div>
     </SidebarProvider>
