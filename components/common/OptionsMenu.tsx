@@ -22,8 +22,8 @@ const OptionsMenu = ({ file }: { file: Models.Document }) => {
       <DropdownMenuTrigger>
         <EllipsisVertical />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-4">
-        <DropdownMenuLabel className="font-bold text-xl p-2">
+      <DropdownMenuContent className="p-4 w-fit">
+        <DropdownMenuLabel className="font-bold text-xl p-2 break-words max-w-[250px] whitespace-normal">
           {file.name}
         </DropdownMenuLabel>
         {options.map((option, index) => (

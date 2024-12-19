@@ -27,7 +27,7 @@ const PaginationComponent = ({
   };
 
   return (
-    <Pagination>
+    <Pagination className="mt-12">
       <PaginationContent>
         {currentPage > 1 && (
           <PaginationItem>

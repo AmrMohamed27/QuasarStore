@@ -37,7 +37,7 @@ const Sorter = ({
       onValueChange={(value) => handleSelectChange(value)}
       defaultValue={currentValue ?? "newest"}
     >
-      <SelectTrigger className="w-[250px] bg-white dark:bg-brand-dark-kohly">
+      <SelectTrigger className="flex-1 max-w-[250px] bg-white dark:bg-brand-dark-kohly">
         <SelectValue placeholder="Choose method" />
       </SelectTrigger>
       <SelectContent>

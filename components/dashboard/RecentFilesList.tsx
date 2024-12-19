@@ -27,10 +27,7 @@ const RecentFilesList = ({ files }: { files?: Models.Document[] }) => {
                 <div className="flex flex-col">
                   <div className="flex flex-row">
                     <span className="font-semibold md:text-lg truncate max-xs:max-w-24 max-sm:max-w-32">
-                      {file.name.split(".")[0]}
-                    </span>
-                    <span className="font-semibold md:text-lg max-w-12">
-                      .{file.name.split(".")[1]}
+                      {file.name}
                     </span>
                   </div>
                   <span className="text-brand-blueish-gray text-sm">

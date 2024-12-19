@@ -27,15 +27,15 @@ const FileTypePage = ({
         <span className="capitalize">{title}</span>
       </h1>
       {/* total and sort */}
-      <div className="w-full flex flex-col lg:flex-row lg:justify-between lg:items-center">
+      <div className="w-full flex flex-col lg:flex-row lg:justify-between lg:items-center max-lg:gap-4">
         {/* Total */}
         <span>
           Total:{" "}
           <span className="font-semibold">{convertFileSize(totalSize, 2)}</span>
         </span>
         {/* Sort */}
-        <div className="flex flex-row gap-4 items-center">
-          <span>Sort by:</span>
+        <div className="flex flex-row gap-2 md:gap-4 items-center">
+          <span className="max-xs:hidden">Sort by:</span>
           <Sorter setSortBy={setSortBy} />
         </div>
       </div>
