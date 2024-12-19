@@ -11,6 +11,13 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { sidebarItems } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
@@ -95,7 +102,17 @@ export function AppSidebar({ currentUser }: { currentUser: any }) {
                   className="rounded-full"
                 />
                 <div className="flex flex-col gap-1 items-start justify-center">
-                  <span className="font-semibold text-lg">{fullName}</span>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        {" "}
+                        <span className="font-semibold text-lg truncate">
+                          {fullName}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent>{fullName}</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                   <span className="text-xs text-brand-gray">{email}</span>
                 </div>
               </Link>

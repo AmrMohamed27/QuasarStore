@@ -53,35 +53,30 @@ export const options: optionsMenuType[] = [
   {
     id: 1,
     title: "Rename",
-    url: "/rename",
     icon: Edit,
     backgroundColor: "#3DD9B3",
   },
   {
     id: 2,
     title: "Details",
-    url: "/details",
     icon: Info,
     backgroundColor: "#EEA8FD",
   },
   {
     id: 3,
     title: "Share",
-    url: "/share",
     icon: Share2,
     backgroundColor: "#F9AB72",
   },
   {
     id: 4,
     title: "Download",
-    url: "/download",
     icon: Download,
     backgroundColor: "#56B8FF",
   },
   {
     id: 5,
-    title: "Move to trash",
-    url: "/remove",
+    title: "Delete",
     icon: Trash2,
     backgroundColor: "#FA7275",
   },
@@ -94,3 +89,5 @@ export const sortOptions = [
   { id: 4, title: "Size (largest)", value: "largest" },
   { id: 5, title: "Size (smallest)", value: "smallest" },
 ];
+
+export const fileDetails = ["format", "size", "owner", "last edit"];

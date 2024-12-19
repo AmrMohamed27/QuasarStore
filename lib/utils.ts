@@ -209,7 +209,7 @@ export const constructFileUrl = (bucketFileId: string) => {
 };
 
 export const constructDownloadUrl = (bucketFileId: string) => {
-  return `${appwriteConfig.endpointUrl}/storage/buckets/${appwriteConfig.bucketId}/files/${bucketFileId}/download?project=${appwriteConfig.projectId}`;
+  return `${appwriteConfig.endpointUrl}/storage/buckets/${appwriteConfig.bucketId}/files/${bucketFileId}/download?project=${appwriteConfig.projectId}&mode=admin`;
 };
 
 export const getFileTypeSizes = (files?: Models.Document[]) => {

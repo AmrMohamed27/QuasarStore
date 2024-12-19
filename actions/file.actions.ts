@@ -39,7 +39,7 @@ export const uploadFile = async ({
       owner: ownerId,
       accountId,
       users: [],
-      bucketField: bucketFile.bucketId,
+      bucketField: bucketFile.$id,
     };
 
     const newFile = await databases
@@ -170,5 +170,110 @@ export const getUsedSpace: () => Promise<GetUsedSpaceReturn> = async () => {
     return parseStringify(totalSpace);
   } catch (error) {
     handleError(error, "Failed to get used space");
+  }
+};
+
+export const renameFile = async ({
+  file,
+  name,
+  path,
+}: {
+  file: Models.Document;
+  name: string;
+  path: string;
+}) => {
+  const { databases } = await createAdminClient();
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) throw new Error("User not found");
+    if (currentUser.$id !== file.owner.$id) {
+      throw new Error("You are not the owner of this file");
+    }
+    const newFile = await databases
+      .updateDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.filesCollectionId,
+        file.$id,
+        {
+          name,
+        }
+      )
+      .catch(async (error) => {
+        handleError(error, "Failed to rename file");
+      });
+    revalidatePath(path);
+    return parseStringify(newFile);
+  } catch (error) {
+    handleError(error, "Failed to rename file");
+  }
+};
+
+export const shareFile = async ({
+  file,
+  email,
+  path,
+}: {
+  file: Models.Document;
+  email: string;
+  path: string;
+}) => {
+  const { databases } = await createAdminClient();
+  try {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) throw new Error("User not found");
+    if (email === file.owner.email) {
+      throw new Error("User is already the owner of the file");
+    }
+    if (file.users.includes(email)) {
+      throw new Error("User already has access to this file");
+    }
+    const newFile = await databases
+      .updateDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.filesCollectionId,
+        file.$id,
+        {
+          users: [...file.users, email],
+        }
+      )
+      .catch(async (error) => {
+        handleError(error, "Failed to share file");
+      });
+    revalidatePath(path);
+    return parseStringify(newFile);
+  } catch (error) {
+    handleError(error, "Failed to share file");
+  }
+};
+
+export const deleteFile = async ({
+  file,
+  path,
+}: {
+  file: Models.Document;
+  path: string;
+}) => {
+  const { databases, storage } = await createAdminClient();
+  const currentUser = await getCurrentUser();
+  if (!currentUser) throw new Error("User not found");
+  if (currentUser.email !== file.owner.email)
+    throw new Error("You are not the owner of this file");
+  try {
+    const bucketResult = await storage.deleteFile(
+      appwriteConfig.bucketId,
+      file.bucketField
+    );
+    const databaseResult = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.filesCollectionId,
+      file.$id
+    );
+    revalidatePath(path);
+    return {
+      bucketResult: parseStringify(bucketResult),
+      databaseResult: parseStringify(databaseResult),
+    };
+  } catch (error) {
+    handleError(error, "Failed to delete file");
   }
 };

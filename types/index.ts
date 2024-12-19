@@ -44,7 +44,6 @@ export type GetFilesProps = {
   searchTerm?: string;
   sort?: string;
   limit?: number;
-
   offset?: number;
 };
 
@@ -61,7 +60,6 @@ export type GetUsedSpaceReturn = {
 export type optionsMenuType = {
   id: number;
   title: string;
-  url: string;
   icon: LucideIcon;
   backgroundColor: string;
 };
