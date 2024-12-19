@@ -1,9 +1,6 @@
-"use client";
 import Image from "next/image";
 import ThumbnailCircle from "../common/ThumbnailCircle";
 import { convertFileSize, formatDateTime } from "@/lib/utils";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 const StatCard = ({
   fileTypes,
@@ -14,17 +11,6 @@ const StatCard = ({
   fileTypeSizes: { [key: string]: number };
   fileTypeLastUpdates: { [key: string]: string };
 }) => {
-  const { theme } = useTheme(); // Get the resolved theme
-  const [resolvedImage, setResolvedImage] = useState("/assets/images/card.svg"); // Default to light image
-
-  useEffect(() => {
-    // Dynamically set the image based on the theme
-    if (theme === "dark") {
-      setResolvedImage("/assets/images/card-dark.svg");
-    } else {
-      setResolvedImage("/assets/images/card.svg");
-    }
-  }, [theme]); // React when the theme changes
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
       {fileTypes.map((type, index) => (
@@ -36,11 +22,18 @@ const StatCard = ({
               imageClassName="size-8"
             />
             <Image
-              src={resolvedImage}
+              src={"/assets/images/card.svg"}
               alt="File Card"
               width={226}
               height={86}
-              className="w-full"
+              className="w-full dark:hidden"
+            />
+            <Image
+              src={"/assets/images/card-dark.svg"}
+              alt="File Card"
+              width={226}
+              height={86}
+              className="w-full hidden dark:block"
             />
           </div>
           {/* Total Type Size */}
