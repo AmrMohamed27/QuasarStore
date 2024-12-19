@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LucideIcon } from "lucide-react";
+import { Models } from "node-appwrite";
 import { Dispatch, SetStateAction } from "react";
 
 export type FileType = "document" | "image" | "video" | "audio" | "other";
@@ -43,6 +44,8 @@ export type GetFilesProps = {
   searchTerm?: string;
   sort?: string;
   limit?: number;
+
+  offset?: number;
 };
 
 export type GetUsedSpaceReturn = {
@@ -61,4 +64,12 @@ export type optionsMenuType = {
   url: string;
   icon: LucideIcon;
   backgroundColor: string;
+};
+
+export type FileTypePageProps = {
+  type: string;
+  title: string;
+  files?: Models.Document[];
+  currentPage: number;
+  totalPages: number;
 };

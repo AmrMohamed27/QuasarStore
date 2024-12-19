@@ -38,24 +38,24 @@ export function AppSidebar({ currentUser }: { currentUser: any }) {
         <SidebarGroup>
           <SidebarMenu>
             {sidebarItems.map((item) => (
-              <SidebarMenuItem key={item.id}>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname.includes(item.url)}
-                  className={`rounded-full p-8 mb-2 flex flex-row gap-8 data-[active=true]:bg-brand-red-1 data-[active=true]:text-white group`}
-                >
-                  <div>
-                    <item.icon
-                      style={{ width: "1.5rem", height: "1.5rem" }}
-                      className="group-data-[active=true]:text-white text-brand-gray w-6 h-6"
-                    />
-                    <Link href={item.url}>
+              <SidebarMenuItem key={item.id} className="">
+                <Link href={item.url}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname.includes(item.url)}
+                    className={`rounded-full p-8 mb-2 flex flex-row gap-8 data-[active=true]:bg-brand-red-1 data-[active=true]:text-white group`}
+                  >
+                    <div>
+                      <item.icon
+                        style={{ width: "1.5rem", height: "1.5rem" }}
+                        className="group-data-[active=true]:text-white text-brand-gray w-6 h-6"
+                      />
                       <span className="font-semibold text-xl">
                         {item.title}
                       </span>
-                    </Link>
-                  </div>
-                </SidebarMenuButton>
+                    </div>
+                  </SidebarMenuButton>
+                </Link>
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
@@ -81,7 +81,11 @@ export function AppSidebar({ currentUser }: { currentUser: any }) {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild size={"lg"}>
+            <SidebarMenuButton
+              asChild
+              size={"lg"}
+              className="px-4 py-8 rounded-2xl"
+            >
               <Link href="/profile">
                 <Image
                   src={avatar}
@@ -92,7 +96,7 @@ export function AppSidebar({ currentUser }: { currentUser: any }) {
                 />
                 <div className="flex flex-col gap-1 items-start justify-center">
                   <span className="font-semibold text-lg">{fullName}</span>
-                  <span className="text-sm text-brand-gray">{email}</span>
+                  <span className="text-xs text-brand-gray">{email}</span>
                 </div>
               </Link>
             </SidebarMenuButton>

@@ -16,6 +16,7 @@ const config: Config = {
         "brand-red-1": "#FA7275",
         "brand-red-2": "#EA6365",
         "brand-kohly": "#131524",
+        "brand-dark-kohly": "#080810",
         "brand-black": "#04050C",
         "brand-light-kohly": "#333F4E",
         "brand-blueish-gray": "#A3B2C7",

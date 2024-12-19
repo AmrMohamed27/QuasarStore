@@ -13,21 +13,24 @@ interface Props {
 export const Thumbnail = ({
   type,
   extension,
-  url = "",
+  url,
   imageClassName,
   className,
 }: Props) => {
   const isImage = type === "image" && extension !== "svg";
+  const size: string = isImage ? "size-16" : "size-12";
 
   return (
     <figure className={cn("rounded-full", className)}>
       <Image
+        unoptimized
         src={isImage && url ? url : getFileIcon(extension, type)}
         alt="thumbnail"
         width={100}
         height={100}
         className={cn(
-          "size-8 object-contain",
+          "rounded-full object-cover",
+          size,
           imageClassName,
           isImage && "thumbnail-image"
         )}

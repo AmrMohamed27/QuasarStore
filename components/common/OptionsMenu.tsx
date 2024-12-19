@@ -52,7 +52,7 @@ const OptionsMenu = ({ file }: { file: Models.Document }) => {
                 <span>{option.title}</span>
               </DropdownMenuItem>
             </Link>
-            <DropdownMenuSeparator />
+            {index !== options.length - 1 && <DropdownMenuSeparator />}
           </div>
         ))}
       </DropdownMenuContent>

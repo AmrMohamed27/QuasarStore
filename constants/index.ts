@@ -86,3 +86,11 @@ export const options: optionsMenuType[] = [
     backgroundColor: "#FA7275",
   },
 ];
+
+export const sortOptions = [
+  { id: 1, title: "Date Created (newest)", value: "newest" },
+  { id: 2, title: "Date Created (oldest)", value: "oldest" },
+  { id: 3, title: "Name", value: "name" },
+  { id: 4, title: "Size (largest)", value: "largest" },
+  { id: 5, title: "Size (smallest)", value: "smallest" },
+];

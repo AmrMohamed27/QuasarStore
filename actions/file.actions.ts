@@ -34,7 +34,7 @@ export const uploadFile = async ({
       type: getFileType(bucketFile.name).type,
       name: bucketFile.name,
       size: bucketFile.sizeOriginal,
-      url: constructFileUrl(bucketFile.$id),
+      url: `${constructFileUrl(bucketFile.$id)}&mode=admin`,
       extension: getFileType(bucketFile.name).extension,
       owner: ownerId,
       accountId,
@@ -66,7 +66,8 @@ const createQueries = (
   types: string[],
   searchText: string,
   sort: string,
-  limit?: number
+  limit?: number,
+  offset?: number
 ) => {
   const queries = [
     Query.or([
@@ -78,6 +79,7 @@ const createQueries = (
   if (types.length > 0) queries.push(Query.equal("type", types));
   if (searchText) queries.push(Query.contains("name", searchText));
   if (limit) queries.push(Query.limit(limit));
+  if (offset) queries.push(Query.offset(offset));
 
   if (sort) {
     const [sortBy, orderBy] = sort.split("-");
@@ -95,23 +97,37 @@ export const getFiles = async ({
   searchTerm = "",
   sort = "$createdAt-desc",
   limit,
+  offset = 0,
 }: GetFilesProps) => {
+  // Create admin client to access the database.
   const { databases } = await createAdminClient();
 
   try {
+    // Get current user.
     const currentUser = await getCurrentUser();
     if (!currentUser) throw new Error("User not found");
 
-    const queries = createQueries(currentUser, types, searchTerm, sort, limit);
+    // Create queries.
+    const queries = createQueries(
+      currentUser,
+      types,
+      searchTerm,
+      sort,
+      limit,
+      offset
+    );
 
+    // Get files from database
     const files = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.filesCollectionId,
       queries
     );
 
+    // Parse files to a DocumentList
     const parsedFiles: Models.DocumentList<Models.Document> =
       parseStringify(files);
+
     return parsedFiles;
   } catch (error) {
     handleError(error, "Failed to get files");

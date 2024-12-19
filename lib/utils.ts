@@ -15,7 +15,7 @@ export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 
 export const convertFileSize = (sizeInBytes: number, digits?: number) => {
   if (sizeInBytes < 1024) {
-    return sizeInBytes + " Bytes"; // Less than 1 KB, show in Bytes
+    return sizeInBytes + " B"; // Less than 1 KB, show in Bytes
   } else if (sizeInBytes < 1024 * 1024) {
     const sizeInKB = sizeInBytes / 1024;
     return sizeInKB.toFixed(digits || 1) + " KB"; // Less than 1 MB, show in KB
@@ -235,6 +235,17 @@ export const getFileTypeSizes = (files?: Models.Document[]) => {
   return FileTypeSizes;
 };
 
+export const getTypeSize = ({
+  type,
+  files,
+}: {
+  type: string;
+  files?: Models.Document[];
+}) => {
+  const fileTypeSizes: { [key: string]: number } = getFileTypeSizes(files);
+  return fileTypeSizes[type];
+};
+
 export const getFileTypeLastUpdates = (files?: Models.Document[]) => {
   const FileTypeLastUpdates: { [key: string]: string } = {
     document: "",
@@ -282,4 +293,33 @@ export const getFileTypeLastUpdates = (files?: Models.Document[]) => {
     }
   });
   return FileTypeLastUpdates;
+};
+
+export const sortFiles = ({
+  files,
+  sortBy,
+}: {
+  files?: Models.Document[];
+  sortBy: string | null;
+}) => {
+  switch (sortBy) {
+    case "newest":
+      return files?.sort(
+        (a, b) =>
+          new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime()
+      );
+    case "oldest":
+      return files?.sort(
+        (a, b) =>
+          new Date(a.$createdAt).getTime() - new Date(b.$createdAt).getTime()
+      );
+    case "name":
+      return files?.sort((a, b) => a.name.localeCompare(b.name));
+    case "largest":
+      return files?.sort((a, b) => b.size - a.size);
+    case "smallest":
+      return files?.sort((a, b) => a.size - b.size);
+    default:
+      return files;
+  }
 };

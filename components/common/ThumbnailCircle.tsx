@@ -14,10 +14,12 @@ const ThumbnailCircle = ({
   extension?: string;
   url?: string;
 }) => {
+  const isImage = type === "image" && extension !== "svg";
+  const padding: string = isImage ? "p-0" : "p-2";
   return (
     <div
       className={cn(
-        `rounded-full p-2 ${
+        `rounded-full  ${
           type === "document"
             ? "bg-brand-red-1"
             : type === "image"
@@ -26,6 +28,7 @@ const ThumbnailCircle = ({
             ? "bg-accent-green"
             : "bg-accent-pink"
         }`,
+        padding,
         className
       )}
     >
