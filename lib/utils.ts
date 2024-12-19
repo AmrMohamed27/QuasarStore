@@ -323,3 +323,31 @@ export const sortFiles = ({
       return files;
   }
 };
+
+export const parseParams = ({
+  sortBy,
+  paramsPage,
+}: {
+  sortBy?: string;
+  paramsPage?: string;
+}) => {
+  const page = parseInt(paramsPage || "1", 10);
+  const limit = 12;
+  const offset = (page - 1) * limit; // Calculate the offset for pagination
+  const sort =
+    sortBy !== undefined
+      ? sortBy === "newest"
+        ? "$createdAt-desc"
+        : sortBy === "oldest"
+        ? "$createdAt-asc"
+        : sortBy === "name"
+        ? "name-asc"
+        : sortBy === "largest"
+        ? "size-desc"
+        : sortBy === "smallest"
+        ? "size-asc"
+        : undefined
+      : undefined;
+
+  return { page, limit, offset, sort };
+};

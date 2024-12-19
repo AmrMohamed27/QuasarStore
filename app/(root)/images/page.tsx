@@ -1,5 +1,6 @@
 import { getFiles } from "@/actions/file.actions";
 import FileTypePage from "@/components/common/FileTypePage";
+import { parseParams } from "@/lib/utils";
 import React from "react";
 
 const ImagesPage = async ({
@@ -8,23 +9,7 @@ const ImagesPage = async ({
   searchParams: { page?: string; sort?: string };
 }) => {
   const { page: paramsPage, sort: sortBy } = await searchParams;
-  const page = parseInt(paramsPage || "1", 10);
-  const limit = 12;
-  const offset = (page - 1) * limit; // Calculate the offset for pagination
-  const sort =
-    sortBy !== undefined
-      ? sortBy === "newest"
-        ? "$createdAt-desc"
-        : sortBy === "oldest"
-        ? "$createdAt-asc"
-        : sortBy === "name"
-        ? "name-asc"
-        : sortBy === "largest"
-        ? "size-desc"
-        : sortBy === "smallest"
-        ? "size-asc"
-        : undefined
-      : undefined;
+  const { page, limit, sort, offset } = parseParams({ paramsPage, sortBy });
 
   const result = await getFiles({ types: ["image"], limit, offset, sort });
   const files = result?.documents;
