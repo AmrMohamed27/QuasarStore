@@ -1,11 +1,12 @@
 "use client";
 import { convertFileSize, getTypeSize, sortFiles } from "@/lib/utils";
 import { FileTypePageProps } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sorter from "./Sorter";
 import FileCard from "./FileCard";
 import { useSearchParams } from "next/navigation";
 import PaginationComponent from "./Pagination";
+import { Models } from "node-appwrite";
 
 const FileTypePage = ({
   type,
@@ -20,6 +21,21 @@ const FileTypePage = ({
     searchParams?.get("sort") ?? "newest"
   );
   const sortedFiles = sortFiles({ files, sortBy });
+
+  const [filteredFiles, setFilteredFiles] = useState<
+    Models.Document[] | undefined
+  >(sortedFiles);
+
+  useEffect(() => {
+    const query = searchParams?.get("query");
+    if (query && sortedFiles) {
+      setFilteredFiles(
+        sortedFiles.filter((file) =>
+          file.name.toLowerCase().includes(query.trim().toLowerCase())
+        )
+      );
+    }
+  }, [searchParams, sortedFiles]);
   return (
     <div className="flex flex-col gap-4">
       {/* Header */}
@@ -41,8 +57,8 @@ const FileTypePage = ({
       </div>
       {/* Files list */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-        {sortedFiles &&
-          sortedFiles.map((file) => <FileCard key={file.$id} file={file} />)}
+        {filteredFiles &&
+          filteredFiles.map((file) => <FileCard key={file.$id} file={file} />)}
       </div>
       {/* Pagination */}
       <PaginationComponent currentPage={currentPage} totalPages={totalPages} />
